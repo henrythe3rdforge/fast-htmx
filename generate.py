@@ -56,6 +56,7 @@ def main():
         path.chmod(0o755)
     
     (p / "README.md").write_text(render("_readme", name=name))
+    (p / "manifesto.md").write_text(render("_manifesto", name=name))
     
     print(f"  ✓ Created {name}/")
     print(f"\n  cd {name} && ./start.sh\n")
