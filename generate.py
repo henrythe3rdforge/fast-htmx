@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Flask + HTMX + Tailwind Project Generator"""
+"""FastAPI + HTMX + Tailwind Project Generator"""
 
 from pathlib import Path
 
@@ -20,7 +20,7 @@ def render(tpl: str, **ctx) -> str:
 
 
 def main():
-    print("\n━━━ Flask + HTMX + Tailwind Generator ━━━\n")
+    print("\n━━━ FastAPI + HTMX + Tailwind Generator ━━━\n")
     
     name = input("  Project name: ").strip()
     if not name:
@@ -38,7 +38,7 @@ def main():
     
     # Generate files
     (p / "app.py").write_text(render("_app", name=name))
-    (p / "requirements.txt").write_text("flask\npython-dotenv\ngunicorn\n")
+    (p / "requirements.txt").write_text("fastapi\nuvicorn[standard]\njinja2\npython-multipart\npython-dotenv\n")
     (p / ".gitignore").write_text("__pycache__/\nvenv/\n*.pid\n*.port\n*.log\n")
     
     # Templates

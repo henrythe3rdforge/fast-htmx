@@ -17,7 +17,7 @@ PORT=$(python3 -c "import socket; s=socket.socket(); s.bind(('',0)); print(s.get
 
 # Start
 export PORT
-nohup venv/bin/gunicorn -w 2 -b 0.0.0.0:$PORT app:app > app.log 2>&1 &
+nohup venv/bin/uvicorn app:app --host 0.0.0.0 --port $PORT --workers 2 > app.log 2>&1 &
 echo $! > app.pid
 echo $PORT > app.port
 

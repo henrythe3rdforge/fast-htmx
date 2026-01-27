@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
-"""{{ name }} - Flask + HTMX"""
+"""{{ name }} - FastAPI + HTMX"""
 
 import os, sys, atexit, signal
 from pathlib import Path
-from flask import Flask, render_template, request, jsonify
-app = Flask(__name__)
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 SERVICE = "{{ name }}"
 PID_FILE = Path(__file__).parent.parent / "services.pid"
@@ -29,30 +35,31 @@ signal.signal(signal.SIGTERM, sig_handler)
 signal.signal(signal.SIGINT, sig_handler)
 
 
-@app.route("/")
-def index(): return render_template("index.html")
+@app.get("/", response_class=HTMLResponse)
+def index(request: Request): return templates.TemplateResponse(request, "index.html")
 
-@app.route("/about")
-def about(): return render_template("about.html")
+@app.get("/about", response_class=HTMLResponse)
+def about(request: Request): return templates.TemplateResponse(request, "about.html")
 
-@app.route("/contact")
-def contact(): return render_template("contact.html")
+@app.get("/contact", response_class=HTMLResponse)
+def contact(request: Request): return templates.TemplateResponse(request, "contact.html")
 
-@app.route("/contact", methods=["POST"])
-def contact_submit():
-    return render_template("partials/contact_success.html", name=request.form.get("name", ""))
+@app.post("/contact", response_class=HTMLResponse)
+def contact_submit(request: Request, name: str = Form("")):
+    return templates.TemplateResponse(request, "partials/contact_success.html", {"name": name})
 
-@app.route("/api/click", methods=["POST"])
-def api_click(): return render_template("partials/click_response.html")
+@app.post("/api/click", response_class=HTMLResponse)
+def api_click(request: Request): return templates.TemplateResponse(request, "partials/click_response.html")
 
-@app.route("/api/counter", methods=["POST"])
-def api_counter():
-    c = int(request.form.get("count", 0)) + 1
-    return f'<span id="count">{c}</span><input type="hidden" name="count" value="{c}">'
+@app.post("/api/counter", response_class=HTMLResponse)
+def api_counter(count: int = Form(0)):
+    c = count + 1
+    return HTMLResponse(f'<span id="count">{c}</span><input type="hidden" name="count" value="{c}">')
 
-@app.route("/health")
-def health(): return jsonify(status="ok", service=SERVICE, pid=os.getpid())
+@app.get("/health")
+def health(): return {"status": "ok", "service": SERVICE, "pid": os.getpid()}
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
