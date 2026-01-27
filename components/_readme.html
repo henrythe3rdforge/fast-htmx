@@ -1,0 +1,24 @@
+# {{ name }}
+
+Flask + HTMX + Tailwind
+
+## Usage
+
+```bash
+./start.sh   # Start (downloads assets, finds free port)
+./stop.sh    # Stop
+./status.sh  # Check status
+```
+
+## Endpoints
+
+- `GET /` — Home
+- `GET /about` — About
+- `GET|POST /contact` — Contact form
+- `POST /api/click` — HTMX example
+- `POST /api/counter` — Counter example
+- `GET /health` — Health check
+
+## PID Tracking
+
+Services register in `../services.pid` for centralized management.

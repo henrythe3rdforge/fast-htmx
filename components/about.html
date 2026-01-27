@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}About — {{ name }}{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold text-gray-900 mb-4">About</h1>
+<p class="text-gray-500 mb-8">Hypermedia-driven web applications.</p>
+
+<div class="border border-gray-200 rounded p-5 mb-4">
+    <h3 class="font-medium text-gray-900 mb-4">The Stack</h3>
+    <div class="grid grid-cols-3 text-center text-sm">
+        <div><div class="text-xl font-semibold text-gray-900">Flask</div><p class="text-gray-500">Backend</p></div>
+        <div><div class="text-xl font-semibold text-gray-900">HTMX</div><p class="text-gray-500">Interactivity</p></div>
+        <div><div class="text-xl font-semibold text-gray-900">Tailwind</div><p class="text-gray-500">Styling</p></div>
+    </div>
+</div>
+
+<div class="border border-gray-200 rounded p-5 mb-4">
+    <h3 class="font-medium text-gray-900 mb-2">Philosophy</h3>
+    <p class="text-gray-500 text-sm">HTMX returns HTML from the server instead of JSON. Simpler, faster to develop, easier to maintain.</p>
+</div>
+
+<a href="{{ url_for('contact') }}" class="inline-block px-5 py-2 bg-gray-900 text-white text-sm rounded hover:bg-gray-700">Get in Touch</a>
+{% endblock %}
