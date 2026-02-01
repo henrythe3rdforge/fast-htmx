@@ -1,5 +1,0 @@
-__pycache__/
-venv/
-*.pid
-*.port
-*.log
