@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block nav %}
+<a href="{{ url_for('index') }}">Bookmarks</a>
+{% endblock %}
+{% block content %}
+<h1>Bookmarks</h1>
+<p class="muted mb-3">Save links. Search them. No account needed.</p>
+
+<!-- Add form -->
+<div class="card mb-3">
+    <form hx-post="/bookmarks" hx-target="#bookmark-list" hx-swap="innerHTML" hx-on::after-request="this.reset()">
+        <div class="grid grid-3">
+            <div>
+                <label>URL</label>
+                <input type="url" name="url" placeholder="https://..." required>
+            </div>
+            <div>
+                <label>Title</label>
+                <input type="text" name="title" placeholder="Optional title">
+            </div>
+            <div>
+                <label>Tag</label>
+                <input type="text" name="tag" placeholder="e.g. htmx, python">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Bookmark</button>
+    </form>
+</div>
+
+<!-- Search -->
+<div class="mb-3">
+    <input type="search" name="q" placeholder="Search bookmarks..."
+        hx-get="/bookmarks/search" hx-target="#bookmark-list" hx-swap="innerHTML"
+        hx-trigger="input changed delay:300ms, search">
+</div>
+
+<!-- List -->
+<div id="bookmark-list">
+    {% include "partials/bookmark_list.html" %}
+</div>
+{% endblock %}

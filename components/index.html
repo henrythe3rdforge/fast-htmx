@@ -1,42 +1,10 @@
 {% extends "base.html" %}
+{% block nav %}
+<a href="{{ url_for('index') }}">Home</a>
+{% endblock %}
 {% block content %}
-<div class="text-center pb-12 mb-12 border-b border-gray-200">
-    <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ name }}</h1>
-    <p class="text-lg text-gray-500 mb-6">Minimal Flask + HTMX. No JavaScript frameworks.</p>
-    <a href="{{ url_for('about') }}" class="inline-block px-5 py-2 bg-gray-900 text-white text-sm rounded hover:bg-gray-700">Learn More</a>
-</div>
-
-<h2 class="text-xl font-semibold text-gray-900 mb-2">HTMX Examples</h2>
-<p class="text-gray-500 mb-6">Interactive elements powered by hypermedia.</p>
-
-<div class="grid md:grid-cols-2 gap-4 mb-8">
-    <div class="border border-gray-200 rounded p-5">
-        <h3 class="font-medium text-gray-900 mb-1">Click to Load</h3>
-        <p class="text-sm text-gray-500 mb-3">Content loads from the server.</p>
-        <div id="click-target">
-            <button hx-post="/api/click" hx-target="#click-target" hx-swap="innerHTML"
-                class="px-4 py-2 bg-gray-900 text-white text-sm rounded hover:bg-gray-700">Click Me</button>
-        </div>
-    </div>
-    <div class="border border-gray-200 rounded p-5">
-        <h3 class="font-medium text-gray-900 mb-1">Counter</h3>
-        <p class="text-sm text-gray-500 mb-3">Server-side state.</p>
-        <form hx-post="/api/counter" hx-target="#counter-display" hx-swap="innerHTML">
-            <div id="counter-display" class="flex items-center gap-4 mb-3">
-                <span id="count" class="text-2xl font-mono">0</span>
-                <input type="hidden" name="count" value="0">
-            </div>
-            <button type="submit" class="px-4 py-2 bg-gray-900 text-white text-sm rounded hover:bg-gray-700">Increment</button>
-        </form>
-    </div>
-</div>
-
-<div class="border border-gray-200 rounded p-5">
-    <h3 class="font-medium text-gray-900 mb-4">Features</h3>
-    <div class="grid md:grid-cols-3 gap-4 text-sm">
-        <div><strong class="text-gray-900">Fast</strong><p class="text-gray-500">HTML over the wire.</p></div>
-        <div><strong class="text-gray-900">Simple</strong><p class="text-gray-500">No build step.</p></div>
-        <div><strong class="text-gray-900">Flexible</strong><p class="text-gray-500">Works with any backend.</p></div>
-    </div>
+<div class="text-center pb-4 mb-4 border-b">
+    <h1>{{ name }}</h1>
+    <p class="muted">FastAPI + HTMX. No JavaScript frameworks.</p>
 </div>
 {% endblock %}

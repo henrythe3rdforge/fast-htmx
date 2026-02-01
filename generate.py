@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FastAPI + HTMX + Tailwind Project Generator"""
+"""FastAPI + HTMX Project Generator"""
 
 from pathlib import Path
 
@@ -20,7 +20,7 @@ def render(tpl: str, **ctx) -> str:
 
 
 def main():
-    print("\n━━━ FastAPI + HTMX + Tailwind Generator ━━━\n")
+    print("\n━━━ FastAPI + HTMX Generator ━━━\n")
     
     name = input("  Project name: ").strip()
     if not name:
@@ -34,20 +34,20 @@ def main():
     # Create structure
     p.mkdir()
     (p / "templates" / "partials").mkdir(parents=True)
+    (p / "static" / "css").mkdir(parents=True)
     (p / "static" / "js").mkdir(parents=True)
     
     # Generate files
     (p / "app.py").write_text(render("_app", name=name))
-    (p / "requirements.txt").write_text("fastapi\nuvicorn[standard]\njinja2\npython-multipart\npython-dotenv\n")
+    (p / "requirements.txt").write_text("fastapi\nuvicorn[standard]\njinja2\npython-multipart\n")
     (p / ".gitignore").write_text("__pycache__/\nvenv/\n*.pid\n*.port\n*.log\n")
     
-    # Templates
-    for tmpl in ["base", "index", "about", "contact"]:
-        (p / "templates" / f"{tmpl}.html").write_text(render(tmpl, name=name))
+    # CSS — plain, no framework
+    (p / "static" / "css" / "style.css").write_text(render("_style", name=name))
     
-    # Partials
-    for partial in ["contact_success", "click_response"]:
-        (p / "templates" / "partials" / f"{partial}.html").write_text(render(partial, name=name))
+    # Templates
+    (p / "templates" / "base.html").write_text(render("base", name=name))
+    (p / "templates" / "index.html").write_text(render("index", name=name))
     
     # Scripts
     for script in ["start", "stop", "status"]:

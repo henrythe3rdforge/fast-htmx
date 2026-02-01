@@ -3,7 +3,7 @@
 
 import os, sys, atexit, signal
 from pathlib import Path
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -35,29 +35,15 @@ signal.signal(signal.SIGTERM, sig_handler)
 signal.signal(signal.SIGINT, sig_handler)
 
 
+# --- Routes ---
+
 @app.get("/", response_class=HTMLResponse)
-def index(request: Request): return templates.TemplateResponse(request, "index.html")
-
-@app.get("/about", response_class=HTMLResponse)
-def about(request: Request): return templates.TemplateResponse(request, "about.html")
-
-@app.get("/contact", response_class=HTMLResponse)
-def contact(request: Request): return templates.TemplateResponse(request, "contact.html")
-
-@app.post("/contact", response_class=HTMLResponse)
-def contact_submit(request: Request, name: str = Form("")):
-    return templates.TemplateResponse(request, "partials/contact_success.html", {"name": name})
-
-@app.post("/api/click", response_class=HTMLResponse)
-def api_click(request: Request): return templates.TemplateResponse(request, "partials/click_response.html")
-
-@app.post("/api/counter", response_class=HTMLResponse)
-def api_counter(count: int = Form(0)):
-    c = count + 1
-    return HTMLResponse(f'<span id="count">{c}</span><input type="hidden" name="count" value="{c}">')
+def index(request: Request):
+    return templates.TemplateResponse(request, "index.html")
 
 @app.get("/health")
-def health(): return {"status": "ok", "service": SERVICE, "pid": os.getpid()}
+def health():
+    return {"status": "ok", "service": SERVICE, "pid": os.getpid()}
 
 
 if __name__ == "__main__":

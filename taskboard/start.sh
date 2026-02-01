@@ -1,6 +1,6 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-NAME="{{ name }}"
+NAME="taskboard"
 
 # Check if running
 [ -f app.pid ] && kill -0 $(cat app.pid) 2>/dev/null && echo "$NAME already running" && exit 1

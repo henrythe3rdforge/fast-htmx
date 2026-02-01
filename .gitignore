@@ -1,2 +1,8 @@
 .DS_Store
 services.pid
+venv/
+__pycache__/
+*.pyc
+*.pid
+*.log
+*.port

@@ -1,4 +1,4 @@
-# {{ name }}
+# bookmarks
 
 FastAPI + HTMX + Plain CSS. No frameworks, no build step, no bloat.
 
